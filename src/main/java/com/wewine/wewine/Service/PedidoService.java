@@ -73,6 +73,14 @@ public class PedidoService {
         pedidoRepository.save(pedido);
     }
 
+    @Transactional
+    public void deletePedido(Long id) {
+        PedidoEntity pedido = pedidoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pedido com ID " + id + " não encontrado"));
+
+        pedidoRepository.delete(pedido);
+    }
+
     @Transactional // Garante que se um item falhar, o pedido inteiro será desfeito (rollback).
     public PedidoResponseDTO createPedido(PedidoRequestDTO requestDTO) {
 

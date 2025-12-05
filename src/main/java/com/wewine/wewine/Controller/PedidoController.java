@@ -91,4 +91,13 @@ public class PedidoController {
         pedidoService.atualizarStatus(id, dto.getStatus());
         return ResponseEntity.noContent().build();
     }
+
+    // -----------------------------------------------------------
+    // 6. DELETAR PEDIDO
+    // -----------------------------------------------------------
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePedido(@PathVariable Long id) {
+        pedidoService.deletePedido(id);
+        return ResponseEntity.noContent().build();
+    }
 }
