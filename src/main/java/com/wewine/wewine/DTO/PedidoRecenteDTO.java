@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 public class PedidoRecenteDTO {
     private Long id;
     private String cliente;
-    private BigDecimal total;
+    private BigDecimal valorTotal; // CORRIGIDO
     private String status;
 }
-

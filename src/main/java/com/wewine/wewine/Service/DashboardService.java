@@ -28,28 +28,13 @@ public class DashboardService {
     public DashboardResponseDTO getDashboardData() {
         DashboardResponseDTO dashboard = new DashboardResponseDTO();
 
-        // Faturamento mensal - Pedidos com status FATURADO, EMITIDO ou ENTREGUE
         dashboard.setFaturamentoMensal(calcularFaturamentoMensal());
-
-        // Pedidos em aberto - Não cancelados, não concluídos (entregues) e não em trânsito
         dashboard.setPedidosEmAberto(contarPedidosEmAberto());
-
-        // Garrafas vendidas - Pedidos concluídos/finalizados do mês atual
         dashboard.setGarrafasVendidas(contarGarrafasVendidas());
-
-        // Comissões a pagar
         dashboard.setComissoesAPagar(calcularComissoesAPagar());
-
-        // Mix de produtos - Pedidos faturados do mês
         dashboard.setMixDeProdutos(calcularMixDeProdutos());
-
-        // Vendas por cidade - Pedidos faturados por cidade
         dashboard.setVendasPorCidade(calcularVendasPorCidade());
-
-        // Pedidos recentes - Últimos 5 pedidos
         dashboard.setPedidosRecentes(buscarPedidosRecentes());
-
-        // Estoque baixo - Menos de 50 garrafas
         dashboard.setEstoqueBaixo(buscarEstoqueBaixo());
 
         return dashboard;
@@ -141,7 +126,6 @@ public class DashboardService {
                 statusFaturados, inicioMes, fimMes
         );
 
-        // Agrupar itens por tipo de vinho
         Map<TipoVinhoEnum, Integer> quantidadePorTipo = new HashMap<>();
         Map<TipoVinhoEnum, BigDecimal> valorPorTipo = new HashMap<>();
 
@@ -156,7 +140,6 @@ public class DashboardService {
         BigDecimal valorTotal = valorPorTipo.values().stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        // Calcular porcentagem
         return quantidadePorTipo.entrySet().stream()
                 .map(entry -> {
                     TipoVinhoEnum tipo = entry.getKey();
@@ -187,7 +170,6 @@ public class DashboardService {
                 statusFaturados, inicioMes, fimMes
         );
 
-        // Agrupar por cidade
         Map<String, List<PedidoEntity>> pedidosPorCidade = pedidos.stream()
                 .filter(p -> p.getCliente() != null && p.getCliente().getCidade() != null)
                 .collect(Collectors.groupingBy(p -> p.getCliente().getCidade().name()));
@@ -215,7 +197,7 @@ public class DashboardService {
                 .map(p -> new PedidoRecenteDTO(
                         p.getCodigoPedido(),
                         p.getCliente() != null ? p.getCliente().getNome() : "Cliente não informado",
-                        p.getTotal(),
+                        p.getTotal(),  // CORRIGIDO → agora preenche valorTotal
                         p.getStatus().name()
                 ))
                 .collect(Collectors.toList());
@@ -234,4 +216,3 @@ public class DashboardService {
                 .collect(Collectors.toList());
     }
 }
-

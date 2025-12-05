@@ -20,4 +20,3 @@ public class DashboardResponseDTO {
     private List<PedidoRecenteDTO> pedidosRecentes;
     private List<EstoqueBaixoDTO> estoqueBaixo;
 }
-
