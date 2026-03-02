@@ -37,10 +37,6 @@ public class PedidoService {
         this.vinhoRepository = vinhoRepository;
     }
 
-    // -----------------------------------------------------------
-    // LÓGICA DE NEGÓCIO: CRIAÇÃO DO PEDIDO (@Transactional)
-    // -----------------------------------------------------------
-
     public List<PedidoResponseDTO> findByRepresentanteId(Long idRepresentante) {
         List<PedidoEntity> entities = pedidoRepository.findByRepresentanteId(idRepresentante);
 

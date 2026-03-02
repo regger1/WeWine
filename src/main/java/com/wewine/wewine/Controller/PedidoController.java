@@ -24,14 +24,10 @@ public class PedidoController {
         this.pedidoService = pedidoService;
     }
 
-    // SIMULAÇÃO DE SEGURANÇA:
     private Long getRepresentanteIdSimulado() {
         return 1L;
     }
 
-    // -----------------------------------------------------------
-    // 1. CRIAÇÃO DO PEDIDO
-    // -----------------------------------------------------------
     @PostMapping
     public ResponseEntity<PedidoResponseDTO> createPedido(@Valid @RequestBody PedidoRequestDTO request) {
 
@@ -45,9 +41,6 @@ public class PedidoController {
         return ResponseEntity.created(location).body(saved);
     }
 
-    // -----------------------------------------------------------
-    // 2. LISTAR MEUS PEDIDOS
-    // -----------------------------------------------------------
     @GetMapping("/meusPedidos")
     public ResponseEntity<List<PedidoResponseDTO>> findByRepresentante() {
         Long representanteId = getRepresentanteIdSimulado();
@@ -59,9 +52,6 @@ public class PedidoController {
         return ResponseEntity.ok(lista);
     }
 
-    // -----------------------------------------------------------
-    // 3. LISTAGEM GERAL
-    // -----------------------------------------------------------
     @GetMapping
     public ResponseEntity<List<PedidoResponseDTO>> findAll() {
         List<PedidoResponseDTO> lista = pedidoService.findAll();
@@ -71,18 +61,12 @@ public class PedidoController {
         return ResponseEntity.ok(lista);
     }
 
-    // -----------------------------------------------------------
-    // 4. BUSCAR POR ID
-    // -----------------------------------------------------------
     @GetMapping("/{id}")
     public ResponseEntity<PedidoResponseDTO> findById(@PathVariable Long id) {
         PedidoResponseDTO dto = pedidoService.findById(id);
         return ResponseEntity.ok(dto);
     }
 
-    // -----------------------------------------------------------
-    // 5. ATUALIZAR STATUS DO PEDIDO
-    // -----------------------------------------------------------
     @PatchMapping("/{id}/status")
     public ResponseEntity<Void> atualizarStatus(
             @PathVariable Long id,
@@ -92,9 +76,6 @@ public class PedidoController {
         return ResponseEntity.noContent().build();
     }
 
-    // -----------------------------------------------------------
-    // 6. DELETAR PEDIDO
-    // -----------------------------------------------------------
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePedido(@PathVariable Long id) {
         pedidoService.deletePedido(id);

@@ -22,10 +22,6 @@ public class RepresentanteController {
         this.representanteService = representanteService;
     }
 
-    // -----------------------------------------------------------
-    // 1. ENDPOINT: CADASTRO DE NOVO REPRESENTANTE (POST /api/representantes)
-    // Funcionalidade: Cadastro e gerenciamento de representantes de venda
-    // -----------------------------------------------------------
     @PostMapping
     public ResponseEntity<RepresentanteResponseDTO> create(@Valid @RequestBody RepresentanteRequestDTO request) {
 
@@ -36,13 +32,9 @@ public class RepresentanteController {
                 .buildAndExpand(saved.getId())
                 .toUri();
 
-        // Retorna 201 Created
         return ResponseEntity.created(location).body(saved);
     }
 
-    // -----------------------------------------------------------
-    // 2. ENDPOINT: LISTAGEM DE REPRESENTANTES (GET /api/representantes)
-    // -----------------------------------------------------------
     @GetMapping
     public ResponseEntity<List<RepresentanteResponseDTO>> findAll() {
         List<RepresentanteResponseDTO> lista = representanteService.findAll();
@@ -53,9 +45,6 @@ public class RepresentanteController {
         return ResponseEntity.ok(lista);
     }
 
-    // -----------------------------------------------------------
-    // 3. ENDPOINT: CONSULTA POR ID (GET /api/representantes/{id})
-    // -----------------------------------------------------------
     @GetMapping("/{id}")
     public ResponseEntity<RepresentanteResponseDTO> findById(@PathVariable Long id) {
         return representanteService.findById(id)
@@ -63,9 +52,6 @@ public class RepresentanteController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // -----------------------------------------------------------
-    // 4. ENDPOINT: ATUALIZAÇÃO DE REPRESENTANTE (PUT /api/representantes/{id})
-    // -----------------------------------------------------------
     @PutMapping("/{id}")
     public ResponseEntity<RepresentanteResponseDTO> update(
             @PathVariable Long id,
@@ -78,10 +64,6 @@ public class RepresentanteController {
         }
     }
 
-    // -----------------------------------------------------------
-    // 5. ENDPOINT: EXCLUSÃO LÓGICA DE REPRESENTANTE (DELETE /api/representantes/{id})
-    // Funcionalidade: Altera o status do representante para INATIVO
-    // -----------------------------------------------------------
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
@@ -92,10 +74,6 @@ public class RepresentanteController {
         }
     }
 
-    // -----------------------------------------------------------
-    // 6. ENDPOINT: ATUALIZAR CONTADOR DE CLIENTES ATIVOS (POST /api/representantes/{id}/atualizar-clientes-ativos)
-    // Funcionalidade: Atualiza o campo clientesAtivos com a contagem real de clientes vinculados
-    // -----------------------------------------------------------
     @PostMapping("/{id}/atualizar-clientes-ativos")
     public ResponseEntity<RepresentanteResponseDTO> atualizarClientesAtivos(@PathVariable Long id) {
         try {

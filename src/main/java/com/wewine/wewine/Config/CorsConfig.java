@@ -17,21 +17,14 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        // Permitir credenciais
         config.setAllowCredentials(true);
 
-        // Permitir todas as origens (para desenvolvimento)
-        // Para produção, especifique as origens permitidas:
-        // config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:4200"));
         config.setAllowedOriginPatterns(Arrays.asList("*"));
 
-        // Permitir todos os headers
         config.setAllowedHeaders(Arrays.asList("*"));
 
-        // Permitir todos os métodos HTTP
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
 
-        // Headers expostos
         config.setExposedHeaders(Arrays.asList(
             "Authorization",
             "Content-Type",
@@ -41,7 +34,6 @@ public class CorsConfig {
             "Access-Control-Request-Headers"
         ));
 
-        // Tempo de cache da pré-verificação (em segundos)
         config.setMaxAge(3600L);
 
         source.registerCorsConfiguration("/**", config);
